@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:4000";
+const API_URL = "http://localhost:3000/api/";
 
 // Types for authentication
 export interface User {
@@ -33,7 +33,7 @@ export const googleAuth = {
    */
   initiateLogin: async (): Promise<void> => {
     // Redirect đến endpoint bằng cửa sổ mới
-    window.open(`${API_URL}/auth/oauth/google`, "_blank");
+    window.open(`${API_URL}oauth?provider=google`);
   },
 
   /**
@@ -44,10 +44,11 @@ export const googleAuth = {
   handleCallback: async (code: string): Promise<AuthResponse> => {
     try {
       const response = await axios.post(
-        `${API_URL}/auth/oauth/google/callback`,
+        `${API_URL}oauth/google/callback`,
         { code },
         { withCredentials: true }
       );
+      console.log("🚀 ~ handleCallback: ~ response:", response);
 
       return {
         success: true,
